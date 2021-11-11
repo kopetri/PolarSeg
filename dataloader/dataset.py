@@ -269,7 +269,7 @@ class spherical_dataset(data.Dataset):
             data_tuple += (grid_ind,labels,return_fea)
         return data_tuple
     
-@nb.jit('uint8[:,:,:](uint8[:,:,:],int32[:,:])',nopython=True,cache=True,parallel = False)
+@nb.jit('u1[:,:,:](u1[:,:,:],i8[:,:])',nopython=True,cache=True,parallel = False)
 def nb_process_label(processed_label,sorted_label_voxel_pair):
     label_size = 256
     counter = np.zeros((label_size,),dtype = np.uint16)
