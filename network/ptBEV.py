@@ -64,7 +64,7 @@ class ptBEVnet(nn.Module):
             self.pt_fea_dim = self.pool_dim
         
     def forward(self, pt_fea, xy_ind, voxel_fea=None):
-        cur_dev = pt_fea[0].get_device()
+        cur_dev = pt_fea[0].device
         
         # concate everything
         cat_pt_ind = []
@@ -129,8 +129,8 @@ class ptBEVnet(nn.Module):
         
         # stuff pooled data into 4D tensor
         out_data_dim = [len(pt_fea),self.grid_size[0],self.grid_size[1],self.pt_fea_dim]
-        out_data = torch.zeros(out_data_dim, dtype=torch.float32).to(cur_dev)
-        out_data[unq[:,0],unq[:,1],unq[:,2],:] = processed_pooled_data
+        out_data = torch.zeros(out_data_dim).to(cur_dev).float()
+        out_data[unq[:,0],unq[:,1],unq[:,2],:] = processed_pooled_data.float()
         out_data = out_data.permute(0,3,1,2)
         if self.local_pool_op != None:
             out_data = self.local_pool_op(out_data)
