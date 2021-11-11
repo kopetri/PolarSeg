@@ -86,12 +86,12 @@ def main(args):
                                                     batch_size = train_batch_size,
                                                     collate_fn = collate_fn_BEV,
                                                     shuffle = True,
-                                                    num_workers = 4)
+                                                    num_workers = args.worker)
     val_dataset_loader = torch.utils.data.DataLoader(dataset = val_dataset,
                                                     batch_size = val_batch_size,
                                                     collate_fn = collate_fn_BEV,
                                                     shuffle = False,
-                                                    num_workers = 4)
+                                                    num_workers = args.worker)
 
     # training
     epoch=0
@@ -187,8 +187,12 @@ if __name__ == '__main__':
     parser.add_argument('--train_batch_size', type=int, default=2, help='batch size for training (default: 2)')
     parser.add_argument('--val_batch_size', type=int, default=2, help='batch size for validation (default: 2)')
     parser.add_argument('--check_iter', type=int, default=4000, help='validation interval (default: 4000)')
+    parser.add_argument('--worker', type=int, default=4, help="Number of workers")
     
     args = parser.parse_args()
+    # windows safe
+    if sys.platform in ["win32"]:
+        args.worker = 0
     if not len(args.grid_size) == 3:
         raise Exception('Invalid grid size! Grid size should have 3 dimensions.')
 
