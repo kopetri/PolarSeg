@@ -1,7 +1,8 @@
 numpy
 tqdm
 pyyaml
-numba>=0.53.1
+numba==0.53.1
+pytorch_lightning==1.4.0
 --find-links https://data.pyg.org/whl/torch-1.10.0+cu113.html 
 torch_scatter
 Cython
