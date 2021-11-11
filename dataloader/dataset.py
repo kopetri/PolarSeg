@@ -4,10 +4,10 @@
 SemKITTI dataloader
 """
 import os
+from numba.core import decorators
 import numpy as np
 import torch
-import random
-import time
+import sys
 import numba as nb
 import yaml
 from torch.utils import data
@@ -268,8 +268,13 @@ class spherical_dataset(data.Dataset):
         else:
             data_tuple += (grid_ind,labels,return_fea)
         return data_tuple
-    
-@nb.jit('u1[:,:,:](u1[:,:,:],i8[:,:])',nopython=True,cache=True,parallel = False)
+
+
+if sys.platform in ["win32"]:
+    decorator = 'uint8[:,:,:](uint8[:,:,:],int32[:,:])'
+else:
+    decorator = 'u1[:,:,:](u1[:,:,:],i8[:,:])'
+@nb.jit(decorator,nopython=True,cache=True,parallel = False)
 def nb_process_label(processed_label,sorted_label_voxel_pair):
     label_size = 256
     counter = np.zeros((label_size,),dtype = np.uint16)
