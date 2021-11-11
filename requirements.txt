@@ -2,7 +2,7 @@ numpy
 tqdm
 pyyaml
 numba>=0.53.1
---find-links https://pytorch-geometric.com/whl/torch.1.9.1+cu111.html 
+--find-links https://pytorch-geometric.com/whl/torch-1.9.1+cu111.html 
 torch_scatter
 Cython
 scipy
