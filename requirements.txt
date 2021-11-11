@@ -1,9 +1,8 @@
 numpy
-torch==1.9.1
 tqdm
 pyyaml
-numba>=0.39.0
---find-links https://data.pyg.org/whl/torch-1.9.1+cu111.html 
+numba>=0.53.1
+--find-links https://pytorch-geometric.com/whl/torch.1.9.1+cu111.html 
 torch_scatter
 Cython
 scipy
